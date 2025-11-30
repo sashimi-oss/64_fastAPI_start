@@ -1,0 +1,92 @@
+version: '3.9'
+
+services:
+  
+  
+  backend:
+    build: ./backend
+    container_name: fast-api
+    stdin_open: true
+    tty: true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    container_name: react-frontend
+    # command: npm start
+    tty: true
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+
+  
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d appdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
+
+# backend:
+  #   build: ./backend
+  #   container_name: django-backend
+  #   # command: python manage.py runserver 0.0.0.0:8000
+  #   tty: true
+  #   volumes:
+  #     - ./backend:/app
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - MYSQL_HOST=db
+  #     - MYSQL_PORT=3306
+  #     - MYSQL_USER=user
+  #     - MYSQL_PASSWORD=password
+  #     - MYSQL_DATABASE=mydb
+  #   depends_on:
+  #     - db
+
+# db:
+  #   image: mysql:8.0
+  #   container_name: mysql-db
+  #   tty: true
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   user: "1000:1000"
+  #   # restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root 
+  #     MYSQL_DATABASE: mydb
+  #     MYSQL_USER: user
+  #     MYSQL_PASSWORD: password
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - ./db:/var/lib/mysql
