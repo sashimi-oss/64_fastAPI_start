@@ -7,5 +7,10 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 3000,
+    hmr: {
+          host: "localhost", // ブラウザからアクセスするホスト名
+          port: 3000,        // Vite dev server のポート
+        },
   },
+  
 });

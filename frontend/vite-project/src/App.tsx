@@ -1,10 +1,12 @@
 import './App.css';
+import TweetList from './components/tweet-list';
 
 function App() {
   return (
-    <div>
+    <>
       <h1>こんにちは</h1>
-    </div>
+      <TweetList />
+    </>
   )
 }
 
