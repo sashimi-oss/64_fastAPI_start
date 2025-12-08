@@ -8,7 +8,7 @@ conn = psycopg2.connect(
 )
 
 cur = conn.cursor()
-cur.execute("SELECT content FROM tweets")
+cur.execute("SELECT content FROM t_tweets")
 tweet_content = cur.fetchall()
 print(tweet_content)
 
