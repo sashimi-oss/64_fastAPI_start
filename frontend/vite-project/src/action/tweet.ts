@@ -14,6 +14,7 @@ export const fetchTweets = createAsyncThunk<Tweet[], void, {rejectValue: string}
     async (_, { rejectWithValue }) => {
         try {
             const res = await axios.get("http://localhost:8000/connect-db");
+            console.log('res', res);
             return res.data;
         } catch (err) {
             return rejectWithValue("ツイートの取得に失敗しました");

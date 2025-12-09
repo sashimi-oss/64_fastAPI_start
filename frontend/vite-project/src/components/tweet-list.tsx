@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTweets } from "../action/tweet";
-import { AppDispatch, tweetsSelector } from "../reducer/store";
+import { tweetsSelector } from "../reducer/store";
+import type { AppDispatch } from "../reducer/store";
 
 const TweetList = () => {
 	const dispatch = useDispatch<AppDispatch>();

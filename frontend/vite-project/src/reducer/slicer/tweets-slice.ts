@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchTweets, Tweet } from "../../action/tweet";
+import { fetchTweets } from "../../action/tweet";
+import type { Tweet } from "../../action/tweet";
 
 type TweetsState = {
     list: Tweet[];
